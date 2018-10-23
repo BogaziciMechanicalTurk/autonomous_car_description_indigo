@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot name="autonomous_car" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="wheel_transmission" params="wheel">
+  <transmission name="${wheel}_transmission" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${wheel}_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${wheel}_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+</xacro:macro>
+
+<xacro:macro name="hinge_transmission" params="hinge">
+  <transmission name="${hinge}_transmission" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${hinge}_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${hinge}_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+</xacro:macro>
+
+</robot>

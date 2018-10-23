@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<robot name="autonomous_car" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- Chassis related properties -->
+<xacro:property name="chassis_width" value="1.100" />
+<xacro:property name="chassis_length" value="2.717" />
+<xacro:property name="chassis_thickness" value="0.995" />
+<xacro:property name="chassis_weight" value="1356.0" />
+<xacro:property name="chassis_height" value="0.217" />
+<xacro:property name="pi" value="3.141592" />
+
+<!-- Steering related properties -->
+<xacro:property name="steering_wheel_angle_limit" value="${30/180*pi}" />
+
+<!-- Wheel related properties -->
+<xacro:property name="front_wheel_diameter" value="0.600" />
+<xacro:property name="front_wheel_weight" value="11" />
+
+<xacro:property name="rear_wheel_diameter" value="0.430" />
+<xacro:property name="rear_wheel_weight" value="11" />
+
+<!-- Car physical layout -->
+<xacro:property name="front_to_rear_wheel_center" value="2.717" />
+<xacro:property name="front_left_to_right_wheel_center" value="1.100" />
+<xacro:property name="rear_left_to_right_wheel_center" value="0.900" />
+<xacro:property name="baseplate_to_wheel_center" value="0.300" />
+
+<!-- Camera related properties -->
+<xacro:property name="camera_width" value="0.094" />
+<xacro:property name="camera_height" value="0.029" />
+<xacro:property name="camera_depth" value="0.024" />
+<xacro:property name="camera_weight" value="0.162" />
+<xacro:property name="baseplate_frontedge_to_camera" value="0.02" />
+<xacro:property name="camera_mount_height" value="0.3" />
+<xacro:property name="camera_mount_diameter" value="0.01" />
+<xacro:property name="camera_disparity" value="0.14" />
+
+<!-- LiDAR related properties -->
+<xacro:property name="lidar_width" value="0.05" />
+<xacro:property name="lidar_length" value="0.05" />
+<xacro:property name="lidar_height" value="0.05" />
+<xacro:property name="lidar_weight" value="0.200" />
+<xacro:property name="lidar_mount_diameter" value="0.08" />
+<xacro:property name="lidar_mount_height" value="0.3" />
+
+<!-- Chassis -->
+<xacro:macro name="chassis_visual">
+    <origin xyz="0 0 ${chassis_thickness/2}" rpy="0 0 0" />
+    <geometry>
+        <box size="${chassis_width} ${chassis_length} ${chassis_thickness}"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="chassis_geometry">
+    <origin xyz="0 0 ${chassis_thickness/2}" rpy="0 0 0" />
+    <geometry>
+        <box size="${chassis_width} ${chassis_length} ${chassis_thickness}"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="chassis_inertial">
+    <origin xyz="0 0 ${chassis_thickness/8}" rpy="0 0 0" />
+    <xacro:box_inertial mass="${chassis_weight}" length="${chassis_length}" width="${chassis_width}" height="${chassis_thickness/4}" />
+</xacro:macro>
+
+<!-- Hinge -->
+<xacro:macro name="hinge_geometry">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+        <sphere radius="0.015"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="hinge_inertial">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <mass value="1" />
+    <inertia ixx="0.004" ixy="0.0" ixz="0.0" iyy="0.004" iyz="0.0" izz="0.004"/>
+</xacro:macro>
+
+<!-- Wheel -->
+<xacro:macro name="front_wheel_visual">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+        <mesh filename="package://autonomous_car_description/meshes/wheel.obj" scale="0.01 0.01 0.01"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="front_wheel_geometry">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+        <sphere radius="${front_wheel_diameter/2}"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="front_wheel_inertial">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <xacro:sphere_inertial mass="${front_wheel_weight}" radius="${front_wheel_diameter/2}" />
+</xacro:macro>
+
+<xacro:macro name="rear_wheel_visual">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+        <mesh filename="package://autonomous_car_description/meshes/wheel.obj" scale="0.0071 0.0071 0.0071"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="rear_wheel_geometry">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+        <sphere radius="${rear_wheel_diameter/2}"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="rear_wheel_inertial">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <xacro:sphere_inertial mass="${rear_wheel_weight}" radius="${rear_wheel_diameter/2}" />
+</xacro:macro>
+
+<!-- Camera -->
+<xacro:macro name="camera_geometry">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+        <box size="${camera_depth} ${camera_width} ${camera_height}"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="camera_inertial">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <xacro:box_inertial mass="${camera_weight}" length="${camera_depth}" width="${camera_width}" height="${camera_height}" />
+</xacro:macro>
+
+
+<!-- LiDAR -->
+<xacro:macro name="lidar_geometry">
+    <origin xyz="0 0 ${lidar_height/2}" rpy="0 0 0" />
+    <geometry>
+        <box size="${lidar_length} ${lidar_width} ${lidar_height}"/>
+    </geometry>
+</xacro:macro>
+<xacro:macro name="lidar_inertial">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <xacro:box_inertial mass="${lidar_weight}" length="${lidar_length}" width="${lidar_width}" height="${lidar_height}" />
+</xacro:macro>
+
+</robot>
