@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>autonomous_car_description_indigo</name>
+  <name>autonomous_car_description</name>
   <version>0.0.0</version>
-  <description>The autonomous_car_description_indigo package</description>
+  <description>The autonomous_car_description package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
