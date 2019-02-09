@@ -7,7 +7,7 @@
 
 	<include>
 		<static>true</static>  
-		<pose>-133.620346 -285.350403 0.1 0 -0 2.265650</pose>
+		<pose>36.533554 -29.194712 0.1 0 -0 2.265650</pose>
 		<uri>model://race_track</uri>
 	</include>
 	
